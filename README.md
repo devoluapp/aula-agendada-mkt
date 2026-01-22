@@ -1,36 +1,48 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🚀 Plataforma de Aulas Agendadas (Link-Aula)
 
-## Getting Started
+Sistema premium de mini-cursos com agendamento de aulas "ao vivo", automação de marketing via e-mail e integração com Hotmart.
 
-First, run the development server:
+## 🛠 Como Publicar na Vercel (Passo a Passo)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### 1. Preparar o Repositório
+Certifique-se de que seu código está em um repositório no **GitHub**, **GitLab** ou **Bitbucket**.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Configurar o Projeto na Vercel
+1. Acesse [vercel.com](https://vercel.com) e conecte sua conta do GitHub.
+2. Clique em **"Add New"** > **"Project"**.
+3. Importe o repositório deste projeto.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 3. Configurar Variáveis de Ambiente (CRÍTICO)
+Durante a importação, abra a seção **"Environment Variables"** e adicione as chaves que estão no seu `.env.local`:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Variável | Valor |
+| :--- | :--- |
+| `NEXT_PUBLIC_SUPABASE_URL` | Sua URL do Supabase |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Sua Chave Anon do Supabase |
+| `RESEND_API_KEY` | Sua API Key do Resend |
 
-## Learn More
+### 4. Deploy
+Clique em **"Deploy"**. A Vercel levará cerca de 1-2 minutos para compilar e gerar sua URL pública (ex: `link-aula.vercel.app`).
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## ⚡ Configuração Pós-Publicação
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 1. Atualizar URL no Resend (Opcional)
+Se você for usar um domínio próprio (ex: `seu-site.com.br`), lembre-se de:
+1. Validar o domínio no painel do **Resend**.
+2. No arquivo `src/app/api/marketing/send/route.ts`, alterar o campo `from` de `onboarding@resend.dev` para `contato@seu-site.com.br`.
 
-## Deploy on Vercel
+### 2. Configurações de Segurança no Supabase
+Certifique-se de que todas as políticas de RLS e a função `is_admin()` foram executadas no SQL Editor do Supabase conforme as instruções durante o desenvolvimento.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 👨‍💻 Fluxo Administrativo
+1. Acesse `/auth/register` e crie sua conta.
+2. No Supabase, mude sua `role` para `admin` na tabela `profiles`.
+3. Acesse `/admin/dashboard` para criar cursos e configurar templates de e-mail.
+
+---
+
+**Desenvolvido por Antigravity (Advanced Agentic Coding)**
